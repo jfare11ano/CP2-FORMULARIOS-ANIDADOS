@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <strong>Categoria:</strong>
+  <%= @category.name %>
+</h1>
+
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Producto</th>
+      <th scope="col">Precio</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @category.products.each do |product| %>
+    <tr>
+      <th scope="row">1</th>
+      <td><%= product.name %></td>
+      <td><%= product.price %></td>
+      <td><%= link_to "ELIMINAR", category_product_path(@category,product), method: :delete, class: 'link-to-text-color'  %></td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
+
+<%= form_with(model: [@category,Product.new], local: true) do |form| %>
+  <%= form.hidden_field :category_id, value: @category.id%>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :product_name %>
+  </div>
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.number_field :price, id: :product_price %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>
